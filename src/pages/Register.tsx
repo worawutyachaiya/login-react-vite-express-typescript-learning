@@ -7,12 +7,15 @@ import {
   Container,
   Paper,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router";
-import api from "../services/api";
+import { useRegisterMutation } from "../hooks/useAuthMutation";
 
 const Register = () => {
   const navigate = useNavigate();
+  const registerMutation = useRegisterMutation();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -34,16 +37,21 @@ const Register = () => {
       return;
     }
 
-    try {
-      await api.post("/auth/register", {
+    registerMutation.mutate(
+      {
         username: formData.username,
         email: formData.email,
         password: formData.password,
-      });
-      navigate("/login");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Registration failed");
-    }
+      },
+      {
+        onSuccess: () => {
+          navigate("/login");
+        },
+        onError: (err: any) => {
+          setError(err.response?.data?.message || "Registration failed");
+        },
+      }
+    );
   };
 
   return (
@@ -54,7 +62,7 @@ const Register = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)", // Dark premium gradient
+        background: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
       }}
     >
       <Container maxWidth="xs">
@@ -85,9 +93,9 @@ const Register = () => {
             Join us to start your journey
           </Typography>
 
-          {error && (
+          {(error || registerMutation.isError) && (
             <Alert severity="error" sx={{ mb: 2 }}>
-              {error}
+              {error || "Registration failed"}
             </Alert>
           )}
 
@@ -100,6 +108,7 @@ const Register = () => {
               required
               value={formData.username}
               onChange={handleChange}
+              disabled={registerMutation.isPending}
             />
             <TextField
               label="Email"
@@ -110,6 +119,7 @@ const Register = () => {
               required
               value={formData.email}
               onChange={handleChange}
+              disabled={registerMutation.isPending}
             />
             <TextField
               label="Password"
@@ -120,6 +130,7 @@ const Register = () => {
               required
               value={formData.password}
               onChange={handleChange}
+              disabled={registerMutation.isPending}
             />
             <TextField
               label="Confirm Password"
@@ -130,6 +141,7 @@ const Register = () => {
               required
               value={formData.confirmPassword}
               onChange={handleChange}
+              disabled={registerMutation.isPending}
             />
 
             <Button
@@ -137,6 +149,7 @@ const Register = () => {
               fullWidth
               variant="contained"
               size="large"
+              disabled={registerMutation.isPending}
               sx={{
                 mt: 3,
                 mb: 2,
@@ -146,7 +159,11 @@ const Register = () => {
                 background: "linear-gradient(45deg, #2563eb 30%, #3b82f6 90%)",
               }}
             >
-              Sign Up
+              {registerMutation.isPending ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Sign Up"
+              )}
             </Button>
 
             <Box textAlign="center">

@@ -7,19 +7,21 @@ import {
   Container,
   Paper,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router";
-import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
+import { useLoginMutation } from "../hooks/useAuthMutation";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const loginMutation = useLoginMutation();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,18 +29,19 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
-    try {
-      const response = await api.post("/auth/login", {
+    loginMutation.mutate(
+      {
         email: formData.email,
         password: formData.password,
-      });
-      login(response.data.token, response.data.user);
-      navigate("/dashboard");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
-    }
+      },
+      {
+        onSuccess: (data) => {
+          login(data.token, data.user);
+          navigate("/dashboard");
+        },
+      }
+    );
   };
 
   return (
@@ -80,9 +83,10 @@ const Login = () => {
             Sign in to continue
           </Typography>
 
-          {error && (
+          {loginMutation.isError && (
             <Alert severity="error" sx={{ mb: 2 }}>
-              {error}
+              {(loginMutation.error as any)?.response?.data?.message ||
+                "Login failed"}
             </Alert>
           )}
 
@@ -97,6 +101,7 @@ const Login = () => {
               required
               value={formData.email}
               onChange={handleChange}
+              disabled={loginMutation.isPending}
             />
             <TextField
               label="Password"
@@ -108,6 +113,7 @@ const Login = () => {
               required
               value={formData.password}
               onChange={handleChange}
+              disabled={loginMutation.isPending}
             />
 
             <Button
@@ -115,6 +121,7 @@ const Login = () => {
               fullWidth
               variant="contained"
               size="large"
+              disabled={loginMutation.isPending}
               sx={{
                 mt: 3,
                 mb: 2,
@@ -124,7 +131,11 @@ const Login = () => {
                 background: "linear-gradient(45deg, #2563eb 30%, #3b82f6 90%)",
               }}
             >
-              Login
+              {loginMutation.isPending ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Login"
+              )}
             </Button>
 
             <Box textAlign="center">

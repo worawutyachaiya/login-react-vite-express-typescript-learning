@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import api from "../services/api";
 
 interface User {
@@ -22,15 +23,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
   const login = (token: string, userData: User) => {
     localStorage.setItem("token", token);
     setUser(userData);
+
+    queryClient.setQueryData(["auth", "me"], userData);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+
+    queryClient.setQueryData(["auth", "me"], null);
+    queryClient.invalidateQueries({ queryKey: ["auth"] });
   };
 
   const checkAuth = async () => {
@@ -39,6 +46,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (token) {
         const response = await api.get("/auth/me");
         setUser(response.data);
+
+        queryClient.setQueryData(["auth", "me"], response.data);
       }
     } catch (error) {
       localStorage.removeItem("token");
