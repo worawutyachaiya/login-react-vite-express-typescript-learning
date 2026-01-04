@@ -1,11 +1,22 @@
 import { Router } from "express";
+import rateLimit from "express-rate-limit";
 import { AuthController } from "../controllers/authController";
 import { authenticateToken } from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/register", AuthController.register);
-router.post("/login", AuthController.login);
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: {
+    error: "Too many attempts from this IP, please try again after 15 minutes.",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+router.post("/register", authLimiter, AuthController.register);
+router.post("/login", authLimiter, AuthController.login);
 router.get("/me", authenticateToken, AuthController.getMe);
 
 export default router;
