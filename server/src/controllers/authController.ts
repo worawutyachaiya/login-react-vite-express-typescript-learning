@@ -56,14 +56,21 @@ export class AuthController {
       }
 
       const token = jwt.sign(
-        { id: user.id, username: user.username },
+        { id: user.id, username: user.username, role: user.role || "EMPLOYEE" },
         process.env.JWT_SECRET as string,
-        { expiresIn: "1h" }
+        { expiresIn: "8h" },
       );
 
       res.json({
         token,
-        user: { id: user.id, username: user.username, email: user.email },
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role || "EMPLOYEE",
+          first_name: user.first_name,
+          last_name: user.last_name,
+        },
       });
     } catch (error) {
       console.error(error);

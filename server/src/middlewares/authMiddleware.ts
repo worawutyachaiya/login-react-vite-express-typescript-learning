@@ -1,28 +1,53 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-interface AuthRequest extends Request {
-  user?: any;
+export interface AuthRequest extends Request {
+  user?: {
+    id: number;
+    username: string;
+    role: string;
+  };
 }
 
-export const authenticateToken = (
+export const authMiddleware = (
   req: AuthRequest,
   res: Response,
-  next: NextFunction
-): void => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) {
-    res.status(401).json({ message: "Access denied. No token provided." });
-    return;
-  }
-
+  next: NextFunction,
+) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded;
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      res.status(401).json({ message: "No token provided" });
+      return;
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any;
+
+    req.user = {
+      id: decoded.id,
+      username: decoded.username,
+      role: decoded.role || "EMPLOYEE",
+    };
+
     next();
-  } catch (err) {
-    res.status(403).json({ message: "Invalid or expired token." });
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
   }
+};
+
+export const requireRole = (...roles: string[]) => {
+  return (req: AuthRequest, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    if (!roles.includes(req.user.role)) {
+      res.status(403).json({ message: "Forbidden: Insufficient permissions" });
+      return;
+    }
+
+    next();
+  };
 };

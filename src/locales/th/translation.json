@@ -1,0 +1,75 @@
+{
+  "common": {
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ",
+    "edit": "แก้ไข",
+    "add": "เพิ่ม",
+    "search": "ค้นหา",
+    "filter": "กรอง",
+    "actions": "การดำเนินการ",
+    "loading": "กำลังโหลด...",
+    "noData": "ไม่พบข้อมูล",
+    "back": "กลับ",
+    "submit": "ส่ง",
+    "confirm": "ยืนยัน",
+    "success": "สำเร็จ",
+    "error": "ข้อผิดพลาด",
+    "warning": "คำเตือน"
+  },
+  "nav": {
+    "dashboard": "แดชบอร์ด",
+    "employees": "พนักงาน",
+    "departments": "แผนก",
+    "positions": "ตำแหน่ง",
+    "settings": "ตั้งค่า"
+  },
+  "auth": {
+    "login": "เข้าสู่ระบบ",
+    "logout": "ออกจากระบบ",
+    "register": "สมัครสมาชิก",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "username": "ชื่อผู้ใช้",
+    "forgotPassword": "ลืมรหัสผ่าน?",
+    "noAccount": "ยังไม่มีบัญชี?",
+    "hasAccount": "มีบัญชีอยู่แล้ว?"
+  },
+  "employee": {
+    "title": "พนักงาน",
+    "addNew": "เพิ่มพนักงาน",
+    "editEmployee": "แก้ไขข้อมูลพนักงาน",
+    "employeeId": "รหัสพนักงาน",
+    "firstName": "ชื่อ",
+    "lastName": "นามสกุล",
+    "phone": "โทรศัพท์",
+    "department": "แผนก",
+    "position": "ตำแหน่ง",
+    "role": "บทบาท",
+    "status": "สถานะ",
+    "hireDate": "วันที่เริ่มงาน",
+    "active": "ใช้งาน",
+    "inactive": "ไม่ใช้งาน"
+  },
+  "settings": {
+    "title": "ตั้งค่า",
+    "appearance": "รูปลักษณ์",
+    "themeMode": "โหมดธีม",
+    "light": "สว่าง",
+    "dark": "มืด",
+    "fontSize": "ขนาดตัวอักษร",
+    "small": "เล็ก",
+    "medium": "กลาง",
+    "large": "ใหญ่",
+    "fontFamily": "แบบอักษร",
+    "language": "ภาษา"
+  },
+  "dashboard": {
+    "title": "แดชบอร์ด",
+    "welcome": "ยินดีต้อนรับกลับ",
+    "totalEmployees": "พนักงานทั้งหมด",
+    "departments": "แผนก",
+    "positions": "ตำแหน่ง",
+    "activeRate": "อัตราการใช้งาน"
+  }
+}

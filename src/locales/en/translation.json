@@ -1,0 +1,75 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "actions": "Actions",
+    "loading": "Loading...",
+    "noData": "No data found",
+    "back": "Back",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "employees": "Employees",
+    "departments": "Departments",
+    "positions": "Positions",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "employee": {
+    "title": "Employees",
+    "addNew": "Add Employee",
+    "editEmployee": "Edit Employee",
+    "employeeId": "Employee ID",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "department": "Department",
+    "position": "Position",
+    "role": "Role",
+    "status": "Status",
+    "hireDate": "Hire Date",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "themeMode": "Theme Mode",
+    "light": "Light",
+    "dark": "Dark",
+    "fontSize": "Font Size",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "fontFamily": "Font Family",
+    "language": "Language"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "totalEmployees": "Total Employees",
+    "departments": "Departments",
+    "positions": "Positions",
+    "activeRate": "Active Rate"
+  }
+}
