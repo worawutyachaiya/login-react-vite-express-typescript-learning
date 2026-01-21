@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   TextField,
   Button,
@@ -81,8 +79,8 @@ const EmployeeForm = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await api.get("/departments");
-      setDepartments(response.data.ResultOnDb || []);
+      const response = await api.get("/department");
+      setDepartments(response.data.resultOnDb || []);
     } catch (err) {
       console.error("Failed to fetch departments:", err);
     }
@@ -90,8 +88,8 @@ const EmployeeForm = () => {
 
   const fetchPositions = async () => {
     try {
-      const response = await api.get("/positions");
-      setPositions(response.data.ResultOnDb || []);
+      const response = await api.get("/position");
+      setPositions(response.data.resultOnDb || []);
     } catch (err) {
       console.error("Failed to fetch positions:", err);
     }
@@ -99,8 +97,8 @@ const EmployeeForm = () => {
 
   const fetchEmployee = async () => {
     try {
-      const response = await api.get(`/employees/${id}`);
-      const emp = response.data.ResultOnDb;
+      const response = await api.get(`/employee/${id}`);
+      const emp = response.data.resultOnDb;
       setFormData({
         employee_id: emp.employee_id || "",
         username: emp.username || "",
@@ -161,10 +159,10 @@ const EmployeeForm = () => {
 
       if (isEdit) {
         const { password, username, email, ...updateData } = payload;
-        await api.put(`/employees/${id}`, updateData);
+        await api.put(`/employee/${id}`, updateData);
         setSuccess("Employee updated successfully!");
       } else {
-        await api.post("/employees", payload);
+        await api.post("/employee", payload);
         setSuccess("Employee created successfully!");
         setTimeout(() => navigate("/employees"), 1500);
       }

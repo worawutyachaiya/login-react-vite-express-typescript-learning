@@ -43,8 +43,8 @@ const Positions = () => {
   const fetchPositions = async () => {
     try {
       setLoading(true);
-      const response = await api.get("/positions");
-      setPositions(response.data.ResultOnDb || []);
+      const response = await api.get("/position");
+      setPositions(response.data.resultOnDb || []);
     } catch (err) {
       console.error("Failed to fetch positions:", err);
     } finally {
@@ -82,21 +82,21 @@ const Positions = () => {
     }
     try {
       if (editItem) {
-        await api.put(`/positions/${editItem.id}`, formData);
+        await api.put(`/position/${editItem.id}`, formData);
       } else {
-        await api.post("/positions", formData);
+        await api.post("/position", formData);
       }
       handleCloseDialog();
       fetchPositions();
     } catch (err: any) {
-      setError(err.response?.data?.Message || "Failed to save");
+      setError(err.response?.data?.message || "Failed to save");
     }
   };
 
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this position?")) return;
     try {
-      await api.delete(`/positions/${id}`);
+      await api.delete(`/position/${id}`);
       fetchPositions();
     } catch (err) {
       console.error("Failed to delete:", err);

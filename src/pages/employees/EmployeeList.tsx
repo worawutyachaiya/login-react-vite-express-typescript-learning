@@ -80,9 +80,9 @@ const EmployeeList = () => {
       if (departmentFilter) params.append("department_id", departmentFilter);
       if (statusFilter) params.append("status", statusFilter);
 
-      const response = await api.get(`/employees?${params}`);
-      setEmployees(response.data.ResultOnDb || []);
-      setTotal(response.data.TotalCountOnDb || 0);
+      const response = await api.get(`/employee?${params}`);
+      setEmployees(response.data.resultOnDb || []);
+      setTotal(response.data.totalCountOnDb || 0);
     } catch (error) {
       console.error("Failed to fetch employees:", error);
       setEmployees([]);
@@ -93,8 +93,8 @@ const EmployeeList = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await api.get("/departments");
-      setDepartments(response.data.ResultOnDb || []);
+      const response = await api.get("/department");
+      setDepartments(response.data.resultOnDb || []);
     } catch (error) {
       console.error("Failed to fetch departments:", error);
     }
@@ -128,7 +128,7 @@ const EmployeeList = () => {
       return;
     }
     try {
-      await api.delete(`/employees/${selectedEmployee.id}`);
+      await api.delete(`/employee/${selectedEmployee.id}`);
       fetchEmployees();
     } catch (error) {
       console.error("Failed to delete employee:", error);

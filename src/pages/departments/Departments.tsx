@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Box,
   Card,
-  CardContent,
   Typography,
   Button,
   TextField,
@@ -44,8 +43,8 @@ const Departments = () => {
   const fetchDepartments = async () => {
     try {
       setLoading(true);
-      const response = await api.get("/departments");
-      setDepartments(response.data.ResultOnDb || []);
+      const response = await api.get("/department");
+      setDepartments(response.data.resultOnDb || []);
     } catch (err) {
       console.error("Failed to fetch departments:", err);
     } finally {
@@ -83,21 +82,21 @@ const Departments = () => {
     }
     try {
       if (editItem) {
-        await api.put(`/departments/${editItem.id}`, formData);
+        await api.put(`/department/${editItem.id}`, formData);
       } else {
-        await api.post("/departments", formData);
+        await api.post("/department", formData);
       }
       handleCloseDialog();
       fetchDepartments();
     } catch (err: any) {
-      setError(err.response?.data?.Message || "Failed to save");
+      setError(err.response?.data?.message || "Failed to save");
     }
   };
 
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this department?")) return;
     try {
-      await api.delete(`/departments/${id}`);
+      await api.delete(`/department/${id}`);
       fetchDepartments();
     } catch (err) {
       console.error("Failed to delete:", err);
