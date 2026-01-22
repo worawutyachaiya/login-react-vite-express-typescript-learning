@@ -18,8 +18,12 @@ import {
 } from "@mui/icons-material";
 import { useAuth } from "@context/AuthContext";
 import { useThemeContext } from "@context/ThemeContext";
+import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t } = useTranslation()
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { mode, toggleMode } = useThemeContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,7 +51,7 @@ const Navbar = () => {
       }}
     >
       <Typography variant="h6" color="text.primary" fontWeight={600}>
-        Employee Management System
+        {t('Employee Management System')}
       </Typography>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -87,13 +91,7 @@ const Navbar = () => {
             </Typography>
           </Box>
           <Divider />
-          <MenuItem>
-            <ListItemIcon>
-              <AccountCircle fontSize="small" />
-            </ListItemIcon>
-            Profile
-          </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => navigate("/settings")}>
             <ListItemIcon>
               <Settings fontSize="small" />
             </ListItemIcon>

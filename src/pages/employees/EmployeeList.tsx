@@ -233,7 +233,7 @@ const EmployeeList = () => {
         }}
       >
         <TableContainer>
-          <Table sx={{ minWidth: 900 }}>
+          <Table >
             <TableHead>
               <TableRow sx={{ backgroundColor: "action.hover" }}>
                 <TableCell sx={{ fontWeight: 600 }}>Employee ID</TableCell>

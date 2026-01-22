@@ -12,7 +12,7 @@ import {
   People as PeopleIcon,
   Business as BusinessIcon,
   Work as WorkIcon,
-  TrendingUp as TrendingIcon,
+  Timeline as TimelineIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@context/AuthContext";
@@ -134,7 +134,7 @@ const Dashboard = () => {
           <StatCard
             title={t("dashboard.activeRate")}
             value={`${stats?.activeRate ?? 0}%`}
-            icon={<TrendingIcon />}
+            icon={<TimelineIcon />}
             color="#ec4899"
             loading={loading}
           />
@@ -145,12 +145,10 @@ const Dashboard = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" fontWeight={600} sx={{ mb: 2 }}>
-              Quick Overview
+              {t('dashboard.quick')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              This is your Employee Management System dashboard. Use the sidebar
-              to navigate between different sections. You can manage employees,
-              departments, positions, and customize your settings.
+              {t('dashboard.overview')}
             </Typography>
           </CardContent>
         </Card>

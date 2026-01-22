@@ -10,6 +10,8 @@ import {
   MenuItem,
   Divider,
   Stack,
+  TextField,
+  InputAdornment,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
@@ -23,6 +25,14 @@ const Settings = () => {
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
+  };
+
+  const handleFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Number(event.target.value);
+    // ป้องกันค่าติดลบ หรือค่าว่าง
+    if (!isNaN(val) && val > 0) {
+      setFontSize(val);
+    }
   };
 
   return (
@@ -61,22 +71,17 @@ const Settings = () => {
                 <Typography variant="subtitle2" gutterBottom>
                   {t("settings.fontSize")}
                 </Typography>
-                <ToggleButtonGroup
+                <TextField
+                  type="number"
                   value={fontSize}
-                  exclusive
-                  onChange={(_, value) => value && setFontSize(value)}
+                  onChange={handleFontSizeChange}
                   size="small"
-                >
-                  <ToggleButton value="small">
-                    {t("settings.small")}
-                  </ToggleButton>
-                  <ToggleButton value="medium">
-                    {t("settings.medium")}
-                  </ToggleButton>
-                  <ToggleButton value="large">
-                    {t("settings.large")}
-                  </ToggleButton>
-                </ToggleButtonGroup>
+                  sx={{ width: 150 }}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">px</InputAdornment>,
+                    inputProps: { min: 10, max: 40 } 
+                  }}
+                />
               </Box>
 
               <Divider />
@@ -92,6 +97,7 @@ const Settings = () => {
                   >
                     <MenuItem value="Inter">Inter (English)</MenuItem>
                     <MenuItem value="Sarabun">Sarabun (ไทย)</MenuItem>
+                    <MenuItem value="Kanit">Kanit (ไทย)</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

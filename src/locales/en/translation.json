@@ -70,6 +70,13 @@
     "totalEmployees": "Total Employees",
     "departments": "Departments",
     "positions": "Positions",
-    "activeRate": "Active Rate"
-  }
+    "activeRate": "Active Rate",
+    "overview":"This is Employee Management System dashboard. Use the sidebar to navigate between different sections. You can manage employees, departments, positions, and customize settings.",
+    "quick":"Quick Overview"
+
+  },
+   "Employee Management System":"Employee Management System",
+   "Settings":"Settings",
+  "Positions":"Positions",
+  "Departments":"Departments"
 }

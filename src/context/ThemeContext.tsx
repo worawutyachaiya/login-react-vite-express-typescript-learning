@@ -12,8 +12,8 @@ import {
 import { CssBaseline } from "@mui/material";
 
 type ThemeMode = "light" | "dark";
-type FontSize = "small" | "medium" | "large";
-type FontFamily = "Sarabun" | "Inter";
+type FontSize = number;
+type FontFamily = "Sarabun" | "Inter" | "Kanit";
 
 interface ThemeSettings {
   mode: ThemeMode;
@@ -29,16 +29,17 @@ interface ThemeContextType extends ThemeSettings {
 
 const defaultSettings: ThemeSettings = {
   mode: "light",
-  fontSize: "medium",
+  fontSize: 16,
   fontFamily: "Inter",
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const fontSizeMap = {
-  small: 13,
-  medium: 14,
-  large: 16,
+
+const fontFamilyMap: Record<FontFamily, string> = {
+  Sarabun: "'Sarabun', sans-serif",
+  Inter: "'Inter', sans-serif",
+  Kanit: "'Kanit', sans-serif",
 };
 
 export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -87,11 +88,8 @@ export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({
           },
         },
         typography: {
-          fontFamily:
-            settings.fontFamily === "Sarabun"
-              ? "'Sarabun', sans-serif"
-              : "'Inter', sans-serif",
-          fontSize: fontSizeMap[settings.fontSize],
+          fontFamily: fontFamilyMap[settings.fontFamily],
+          fontSize: settings.fontSize,
         },
         shape: {
           borderRadius: 8,

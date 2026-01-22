@@ -27,6 +27,7 @@ import {
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router";
 import Navbar from "./components/Navbar";
+import { useTranslation } from "react-i18next";
 
 const drawerWidth = 260;
 
@@ -36,7 +37,6 @@ interface MenuItem {
   path: string;
   roles?: string[];
 }
-
 const menuItems: MenuItem[] = [
   { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
   {
@@ -51,6 +51,8 @@ const menuItems: MenuItem[] = [
 ];
 
 const VerticalLayout = () => {
+  const { t } = useTranslation()
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -105,7 +107,7 @@ const VerticalLayout = () => {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
+              <ListItemText primary={t(item.text)} />
             </ListItemButton>
           </ListItem>
         ))}
